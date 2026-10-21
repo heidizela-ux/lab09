@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -112,6 +113,12 @@ fun BarraInferior(navController: NavHostController) {
             selected = navController.currentDestination?.route == "posts",
             onClick = { navController.navigate("posts") }
         )
+        NavigationBarItem(
+            icon = { Icon(Icons.Outlined.Menu, contentDescription = "Recetas") },
+            label = { Text("Recetas") },
+            selected = navController.currentDestination?.route == "recetas",
+            onClick = { navController.navigate("recetas") }
+        )
     }
 }
 
@@ -137,6 +144,13 @@ fun Contenido(
                 navArgument("id") { type = NavType.IntType })
             ) {
                 ScreenPost(navController, servicio, it.arguments!!.getInt("id"))
+            }
+
+            composable("recetas") { ScreenRecetas(navController) }
+            composable("recetaVer/{id}", arguments = listOf(
+                navArgument("id") { type = NavType.IntType })
+            ) {
+                ScreenReceta(navController, it.arguments!!.getInt("id"))
             }
         }
     }
